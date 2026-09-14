@@ -31,6 +31,7 @@ namespace ProgressionAmmunition
             listing.GapLine();
             listing.CheckboxLabeled("PA_ShowOnlyDrafted".Translate(), ref settings.showOnlyDrafted);
             listing.Gap();
+            listing.CheckboxLabeled("PA_RefillBuildingsAreInfinite".Translate(), ref settings.refillBuildingsAreInfinite, "PA_RefillBuildingsAreInfiniteDesc".Translate());
             listing.CheckboxLabeled("PA_AutoRefillWithConsumable".Translate(), ref settings.autoRefillWithConsumable);
             listing.Gap();
             listing.CheckboxLabeled("PA_AddRefillBuildingsToScenarios".Translate(), ref settings.addRefillBuildingsToScenarios, "PA_AddRefillBuildingsToScenariosDesc".Translate());

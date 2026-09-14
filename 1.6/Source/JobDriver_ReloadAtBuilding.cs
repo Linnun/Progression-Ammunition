@@ -42,6 +42,7 @@ namespace ProgressionAmmunition
                 var comp = pawn.equipment.Primary.TryGetComp<CompAmmo>();
                 comp.RefillAmmo();
                 comp.PlayReloadSound(pawn);
+                Recharger.ConsumeAmmoRefill();
             });
         }
 

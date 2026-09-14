@@ -44,6 +44,25 @@
       <li>Metallic</li>
     </stuffCategories>
     <costStuffCount>300</costStuffCount>
+	<comps>
+		<li Class="CompProperties_Refuelable">
+			<fuelLabel>Arrow refills</fuelLabel>
+			<fuelGizmoLabel>Arrow refills</fuelGizmoLabel>
+			<outOfFuelMessage>Out of arrow refills</outOfFuelMessage>
+			<fuelFilter>
+				<thingDefs>
+					<li>PA_ArrowRefill</li>
+				</thingDefs>
+			</fuelFilter>
+			<fuelCapacity>50</fuelCapacity>
+			<initialFuelPercent>0</initialFuelPercent>
+			<autoRefuelPercent>0.75</autoRefuelPercent>
+			<showFuelGizmo>true</showFuelGizmo>
+			<minimumFueledThreshold>1</minimumFueledThreshold>
+			<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+			<fuelIconPath>Things/Item/ProgressionAmmunition/ArrowRefill</fuelIconPath>
+		</li>
+	</comps>
     <researchPrerequisites>
       <li MayRequire="OskarPotocki.VFE.Tribals">VFET_Bow</li>
     </researchPrerequisites>
@@ -73,6 +92,23 @@
 			<explosiveRadius>3.9</explosiveRadius>
 			<explosiveDamageType>Bomb</explosiveDamageType>
 			<chanceNeverExplodeFromDamage>0.5</chanceNeverExplodeFromDamage>
+		</li>
+		<li Class="CompProperties_Refuelable">
+			<fuelLabel>Ammo refills</fuelLabel>
+			<fuelGizmoLabel>Ammo refills</fuelGizmoLabel>
+			<outOfFuelMessage>Out of ammo refills</outOfFuelMessage>
+			<fuelFilter>
+				<thingDefs>
+					<li>PA_AmmoRefill</li>
+				</thingDefs>
+			</fuelFilter>
+			<fuelCapacity>50</fuelCapacity>
+			<initialFuelPercent>0</initialFuelPercent>
+			<autoRefuelPercent>0.75</autoRefuelPercent>
+			<showFuelGizmo>true</showFuelGizmo>
+			<minimumFueledThreshold>1</minimumFueledThreshold>
+			<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+			<fuelIconPath>Things/Item/ProgressionAmmunition/AmmoRefill</fuelIconPath>
 		</li>
 	</comps>
     <researchPrerequisites>
@@ -105,6 +141,23 @@
 			<explosiveRadius>3.9</explosiveRadius>
 			<explosiveDamageType>EMP</explosiveDamageType>
 			<chanceNeverExplodeFromDamage>0.5</chanceNeverExplodeFromDamage>
+		</li>
+		<li Class="CompProperties_Refuelable">
+			<fuelLabel>Charge refills</fuelLabel>
+			<fuelGizmoLabel>Charge refills</fuelGizmoLabel>
+			<outOfFuelMessage>Out of charge refills</outOfFuelMessage>
+			<fuelFilter>
+				<thingDefs>
+					<li>PA_ChargeRefill</li>
+				</thingDefs>
+			</fuelFilter>
+			<fuelCapacity>50</fuelCapacity>
+			<initialFuelPercent>0</initialFuelPercent>
+			<autoRefuelPercent>0.75</autoRefuelPercent>
+			<showFuelGizmo>true</showFuelGizmo>
+			<minimumFueledThreshold>1</minimumFueledThreshold>
+			<consumeFuelOnlyWhenUsed>true</consumeFuelOnlyWhenUsed>
+			<fuelIconPath>Things/Item/ProgressionAmmunition/ChargeRefill</fuelIconPath>
 		</li>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
