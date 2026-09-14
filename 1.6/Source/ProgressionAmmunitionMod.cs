@@ -23,10 +23,15 @@ namespace ProgressionAmmunition
             return Content.Name;
         }
 
+        private static Vector2 scrollPosition;
+        private static float scrollViewHeight;
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
-            var listing = new Listing_Standard();
-            listing.Begin(inRect);
+            var viewRect = new Rect(0f, 0f, inRect.width - 16f, Mathf.Max(scrollViewHeight, inRect.height));
+            Widgets.BeginScrollView(inRect, ref scrollPosition, viewRect);
+            var listing = new Listing_Standard { maxOneColumn = true };
+            listing.Begin(new Rect(0f, 0f, viewRect.width, 99999f));
             listing.CheckboxLabeled("PA_EnableMod".Translate(), ref settings.enableMod, "PA_EnableModDesc".Translate());
             listing.GapLine();
             listing.CheckboxLabeled("PA_ShowOnlyDrafted".Translate(), ref settings.showOnlyDrafted);
@@ -48,7 +53,9 @@ namespace ProgressionAmmunition
             ChanceSlider(listing, "PA_SpacerRefillChance", ref settings.spacerRefillChance);
             ChanceSlider(listing, "PA_UltraRefillChance", ref settings.ultraRefillChance);
             ChanceSlider(listing, "PA_ArchotechRefillChance", ref settings.archotechRefillChance);
+            scrollViewHeight = listing.CurHeight + 12f;
             listing.End();
+            Widgets.EndScrollView();
         }
 
         public override void WriteSettings()
