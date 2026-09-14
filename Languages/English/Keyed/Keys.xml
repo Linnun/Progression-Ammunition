@@ -3,6 +3,8 @@
   <PA_EnableMod>Enable mod</PA_EnableMod>
   <PA_EnableModDesc>When off, the ammunition system is switched off: weapons fire without using ammo, the ammo gizmo and Assign tab column are hidden, NPCs stop spawning with refills, traders stop stocking them, and the recharger buildings and refill recipes disappear. Existing refill items and built rechargers are left in place.</PA_EnableModDesc>
   <PA_ShowOnlyDrafted>Show ammunition gizmo only while drafted</PA_ShowOnlyDrafted>
+  <PA_RefillBuildingsAreInfinite>Refill buildings have infinite refills</PA_RefillBuildingsAreInfinite>
+  <PA_RefillBuildingsAreInfiniteDesc>If disabled, refill buildings have limited amount of refills, and need to be restocked using craftable refill packs of the corresponding ammo type.</PA_RefillBuildingsAreInfiniteDesc>
   <PA_AutoRefillWithConsumable>Automatically use refill packs</PA_AutoRefillWithConsumable>
   <PA_AddRefillBuildingsToScenarios>Automatically add refill buildings to scenarios</PA_AddRefillBuildingsToScenarios>
   <PA_AddRefillBuildingsToScenariosDesc>Scenarios that start you with ranged weapons also give you one uninstalled refill building for each ammo type those weapons use.</PA_AddRefillBuildingsToScenariosDesc>
@@ -16,6 +18,7 @@
   <PA_RefillWithConsumable>Refill ammo</PA_RefillWithConsumable>
   <PA_RefillWithConsumableDesc>Consume 1 {0} to instantly refill ammunition to maximum.</PA_RefillWithConsumableDesc>
   <PA_AmmoAlreadyFull>Cannot refill: ammunition is already full.</PA_AmmoAlreadyFull>
+  <PA_AmmoBoxOutOfAmmo>Cannot refill: refill building is out of refills.</PA_AmmoBoxOutOfAmmo>
   <PA_IncompatibleWeapon>Cannot refill: incompatible weapon type.</PA_IncompatibleWeapon>
   <PA_RechargerUnpowered>Cannot refill: recharger is not powered.</PA_RechargerUnpowered>
   <PA_RechargerInUse>Cannot refill: refill building is already in use.</PA_RechargerInUse>

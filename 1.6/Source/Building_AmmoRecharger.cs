@@ -15,8 +15,24 @@ namespace ProgressionAmmunition
 
         public bool CanRecharge(CompAmmo ammo)
         {
-            if (ProgressionAmmunitionMod.Enabled is false || ammo.WeaponAmmoType != RechargerAmmoType || IsPowered is false || ammo.CurAmmo >= ammo.MaxAmmo) return false;
+            if (ProgressionAmmunitionMod.Enabled is false || ammo.WeaponAmmoType != RechargerAmmoType || IsPowered is false || ammo.CurAmmo >= ammo.MaxAmmo)
+                return false;
+
+            if (!ProgressionAmmunitionMod.settings.refillBuildingsAreInfinite && this.TryGetComp<CompRefuelable>(out var compRefuelable))
+                return compRefuelable.Fuel >= 1f;
+
             return true;
+        }
+
+        public void ConsumeAmmoRefill()
+        {
+            if (ProgressionAmmunitionMod.settings.refillBuildingsAreInfinite)
+                return;
+
+            if (this.TryGetComp<CompRefuelable>(out var compRefuelable))
+            {
+                compRefuelable.ConsumeFuel(1f);
+            }
         }
 
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
@@ -45,6 +61,10 @@ namespace ProgressionAmmunition
             else if (ammoComp.CurAmmo >= ammoComp.MaxAmmo)
             {
                 yield return new FloatMenuOption("PA_AmmoAlreadyFull".Translate(), null);
+            }
+            else if (!ProgressionAmmunitionMod.settings.refillBuildingsAreInfinite && this.TryGetComp<CompRefuelable>(out var compRefuelable) && compRefuelable.Fuel < 1f)
+            {
+                yield return new FloatMenuOption("PA_AmmoBoxOutOfAmmo".Translate(), null);
             }
             else if (selPawn.CanReserve(this) is false)
             {
