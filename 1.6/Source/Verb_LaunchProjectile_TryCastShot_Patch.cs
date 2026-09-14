@@ -9,12 +9,15 @@ namespace ProgressionAmmunition
     {
         public static bool Prefix(Verb_LaunchProjectile __instance)
         {
-            if (ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn && pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
+            if (ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn)
             {
-                var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                if (comp != null && comp.CurAmmo <= 0)
+                if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
-                    return false;
+                    var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                    if (comp != null && comp.CurAmmo <= 0)
+                    {
+                        return false;
+                    }
                 }
             }
             return true;
@@ -22,15 +25,21 @@ namespace ProgressionAmmunition
 
         public static void Postfix(Verb_LaunchProjectile __instance, bool __result)
         {
-            if (__result && ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn && pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
+            if (__result && ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn)
             {
-                var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                if (comp != null)
+                if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
-                    comp.ConsumeAmmo();
-                    if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable && comp.CurAmmo <= 0)
+                    var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                    if (comp != null)
                     {
-                        comp.TryRefillAmmoFromConsumable();
+                        comp.ConsumeAmmo();
+                        if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable || (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+                        {
+                            if (comp.CurAmmo <= 0)
+                            {
+                                comp.TryRefillAmmoFromConsumable();
+                            }
+                        }
                     }
                 }
             }

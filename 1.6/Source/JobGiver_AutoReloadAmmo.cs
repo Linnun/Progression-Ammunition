@@ -29,7 +29,11 @@ namespace ProgressionAmmunition
 
         private static CompAmmo AmmoToReload(Pawn pawn)
         {
-            if (ProgressionAmmunitionMod.Enabled is false || pawn.IsColonist is false || pawn.Drafted || pawn.Faction != Faction.OfPlayer || pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation) is false)
+            if (ProgressionAmmunitionMod.Enabled is false || pawn.Drafted || pawn.Faction != Faction.OfPlayer || pawn.health.capacities.CapableOf(PawnCapacityDefOf.Manipulation) is false)
+            {
+                return null;
+            }
+            if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && !pawn.IsColonist)
             {
                 return null;
             }

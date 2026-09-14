@@ -9,12 +9,15 @@ namespace ProgressionAmmunition
     {
         public static void Postfix(Verb __instance, ref bool __result)
         {
-            if (__result && ProgressionAmmunitionMod.Enabled && __instance.IsMeleeAttack is false && __instance.CasterPawn is Pawn pawn && pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
+            if (__result && ProgressionAmmunitionMod.Enabled && __instance.IsMeleeAttack is false && __instance.CasterPawn is Pawn pawn)
             {
-                var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                if (comp != null && comp.CurAmmo <= 0)
+                if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
-                    __result = false;
+                    var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                    if (comp != null && comp.CurAmmo <= 0)
+                    {
+                        __result = false;
+                    }
                 }
             }
         }

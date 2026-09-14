@@ -138,12 +138,17 @@ namespace ProgressionAmmunition
             }
 
             var pawn = Holder;
-            if (pawn == null || pawn.IsColonist is false || pawn.Faction != Faction.OfPlayer)
+            if (pawn == null)
             {
                 yield break;
             }
 
-            if (ProgressionAmmunitionMod.settings.showOnlyDrafted is false || pawn.Drafted)
+            if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+            {
+                yield break;
+            }
+
+            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.godMode && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer)))
             {
                 yield return new Gizmo_Ammo(this);
             }
@@ -193,12 +198,22 @@ namespace ProgressionAmmunition
 
         public override string CompInspectStringExtra()
         {
-            if (ProgressionAmmunitionMod.Enabled is false || parent.def.IsRangedWeapon is false) return null;
-            var pawn = Holder;
-            if (pawn == null || pawn.IsColonist is false || pawn.Faction != Faction.OfPlayer)
+            if (!ProgressionAmmunitionMod.Enabled || !parent.def.IsRangedWeapon)
             {
                 return null;
             }
+
+            var pawn = Holder;
+            if (pawn == null)
+            {
+                return null;
+            }
+
+            if (!DebugSettings.godMode && ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+            {
+                return null;
+            }
+
             return "PA_AmmoRemaining".Translate(CurAmmo, MaxAmmo);
         }
     }

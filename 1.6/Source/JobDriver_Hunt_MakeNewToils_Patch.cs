@@ -13,7 +13,16 @@ namespace ProgressionAmmunition
             __instance.FailOn(() =>
             {
                 var pawn = __instance.pawn;
-                if (ProgressionAmmunitionMod.Enabled is false || pawn.IsColonist is false || pawn.Faction != Faction.OfPlayer) return false;
+                if (!ProgressionAmmunitionMod.Enabled)
+                {
+                    return false;
+                }
+
+                if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+                {
+                    return false;
+                }
+
                 var comp = pawn.equipment?.Primary?.TryGetComp<CompAmmo>();
                 return comp != null && comp.CurAmmo < 1;
             });
