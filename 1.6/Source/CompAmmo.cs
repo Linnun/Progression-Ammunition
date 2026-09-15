@@ -12,7 +12,7 @@ namespace ProgressionAmmunition
         private const float BurstShotMaxAmmoMultiplier = 1f; // only used for weapons without AmmoExtension.maxAmmo
         private const int MaxBurstShotCountForAmmoScaling = 10;
         private int curAmmo = -1;
-        public float autoReloadThreshold = 0.5f;
+        public float autoReloadThreshold = 1f;
 
         public Pawn Holder => (parent.ParentHolder as Pawn_EquipmentTracker)?.pawn;
 
@@ -70,7 +70,7 @@ namespace ProgressionAmmunition
         {
             base.PostExposeData();
             Scribe_Values.Look(ref curAmmo, "curAmmo", -1);
-            Scribe_Values.Look(ref autoReloadThreshold, "autoReloadThreshold", 0.5f);
+            Scribe_Values.Look(ref autoReloadThreshold, "autoReloadThreshold", 1f);
             if (Scribe.mode == LoadSaveMode.PostLoadInit && curAmmo < 0)
             {
                 curAmmo = MaxAmmo;
