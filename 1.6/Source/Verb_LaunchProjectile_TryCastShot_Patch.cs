@@ -1,6 +1,5 @@
 using HarmonyLib;
 using RimWorld;
-using UnityEngine.UIElements;
 using Verse;
 
 namespace ProgressionAmmunition
@@ -10,15 +9,12 @@ namespace ProgressionAmmunition
     {
         public static bool Prefix(Verb_LaunchProjectile __instance)
         {
-            if (ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn)
+            if (__instance.CasterPawn is Pawn pawn && RefillUtility.DoesPawnUseAmmo(pawn))
             {
-                if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
+                CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                if (comp != null && comp.IsOutOfAmmo)
                 {
-                    CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                    if (comp != null && comp.IsOutOfAmmo)
-                    {
-                        return false;
-                    }
+                    return false;
                 }
             }
             return true;
@@ -26,33 +22,30 @@ namespace ProgressionAmmunition
 
         public static void Postfix(Verb_LaunchProjectile __instance, bool __result)
         {
-            if (__result && ProgressionAmmunitionMod.Enabled && __instance.CasterPawn is Pawn pawn)
+            if (__result && __instance.CasterPawn is Pawn pawn && RefillUtility.DoesPawnUseAmmo(pawn))
             {
-                if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
+                CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                if (comp != null)
                 {
-                    CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                    if (comp != null)
+                    comp.ConsumeAmmo();
+                    if (comp.IsOutOfAmmo)
                     {
-                        comp.ConsumeAmmo();
-                        if (comp.IsOutOfAmmo)
+                        MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "PA_MoteOutOfAmmo".Translate());
+
+                        if (pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
                         {
-                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "PA_MoteOutOfAmmo".Translate());
-
-                            if (pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
+                            if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable)
                             {
-                                if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable)
-                                {
-                                    comp.TryRefillAmmoFromConsumable();
-                                }
+                                comp.TryRefillAmmoFromConsumable();
                             }
-                            else
-                            {
-                                if (comp.TryRefillAmmoFromConsumable())
-                                    return;
+                        }
+                        else
+                        {
+                            if (comp.TryRefillAmmoFromConsumable())
+                                return;
 
-                                OutOfAmmoUtility.TryStowOrDropWeapon(pawn);
-                                OutOfAmmoUtility.TryEquipOtherWeapon(pawn);
-                            }
+                            OutOfAmmoUtility.TryStowOrDropWeapon(pawn);
+                            OutOfAmmoUtility.TryEquipOtherWeapon(pawn);
                         }
                     }
                 }

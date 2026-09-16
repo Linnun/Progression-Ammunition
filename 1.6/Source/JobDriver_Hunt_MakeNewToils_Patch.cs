@@ -13,12 +13,7 @@ namespace ProgressionAmmunition
             __instance.FailOn(() =>
             {
                 var pawn = __instance.pawn;
-                if (!ProgressionAmmunitionMod.Enabled)
-                {
-                    return false;
-                }
-
-                if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+                if (!RefillUtility.DoesPawnUseAmmo(pawn))
                 {
                     return false;
                 }

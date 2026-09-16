@@ -134,23 +134,13 @@ namespace ProgressionAmmunition
 
         public IEnumerable<Gizmo> GetAmmoGizmos()
         {
-            if (ProgressionAmmunitionMod.Enabled is false || parent.def.IsRangedWeapon is false)
-            {
-                yield break;
-            }
-
             var pawn = Holder;
-            if (pawn == null)
+            if (pawn == null || !parent.def.IsRangedWeapon || !RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 yield break;
             }
 
-            if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
-            {
-                yield break;
-            }
-
-            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.ShowDevGizmos && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer)))
+            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.ShowDevGizmos && !pawn.IsPlayerControlled))
             {
                 yield return new Gizmo_Ammo(this);
             }
@@ -232,18 +222,13 @@ namespace ProgressionAmmunition
 
         public override string CompInspectStringExtra()
         {
-            if (!ProgressionAmmunitionMod.Enabled || !parent.def.IsRangedWeapon)
-            {
-                return null;
-            }
-
             var pawn = Holder;
-            if (pawn == null)
+            if (pawn == null || !parent.def.IsRangedWeapon || !RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 return null;
             }
 
-            if (!DebugSettings.godMode && ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+            if (!DebugSettings.godMode && !pawn.IsPlayerControlled)
             {
                 return null;
             }
