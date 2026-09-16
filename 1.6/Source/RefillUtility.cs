@@ -67,7 +67,7 @@ namespace ProgressionAmmunition
             if (pawn?.RaceProps.Humanlike != true)
                 return false;
 
-            if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+            if (ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
                 return false;
 
             return true;
