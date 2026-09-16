@@ -30,6 +30,7 @@
   <PA_AmmoType_Arrow>arrow</PA_AmmoType_Arrow>
   <PA_AmmoType_Ammo>ammo</PA_AmmoType_Ammo>
   <PA_AmmoType_Charge>charge</PA_AmmoType_Charge>
+  <PA_MoteOutOfAmmo>out of ammo</PA_MoteOutOfAmmo>
   <PA_SpawnRefillHeader>Refills carried by spawned non-player pawns</PA_SpawnRefillHeader>
   <PA_AnimalRefillChance>Chance for animal NPCs to spawn with an arrow refill: {0}%</PA_AnimalRefillChance>
   <PA_NeolithicRefillChance>Chance for neolithic faction NPCs to spawn with an arrow refill: {0}%</PA_NeolithicRefillChance>

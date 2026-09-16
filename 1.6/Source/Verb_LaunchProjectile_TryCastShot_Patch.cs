@@ -1,5 +1,6 @@
 using HarmonyLib;
 using RimWorld;
+using UnityEngine.UIElements;
 using Verse;
 
 namespace ProgressionAmmunition
@@ -35,6 +36,8 @@ namespace ProgressionAmmunition
                         comp.ConsumeAmmo();
                         if (comp.IsOutOfAmmo)
                         {
+                            MoteMaker.ThrowText(pawn.DrawPos, pawn.Map, "PA_MoteOutOfAmmo".Translate());
+
                             if (pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
                             {
                                 if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable)
