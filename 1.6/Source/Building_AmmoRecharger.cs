@@ -42,7 +42,8 @@ namespace ProgressionAmmunition
                 yield return opt;
             }
 
-            if (ProgressionAmmunitionMod.Enabled is false || selPawn.IsColonistPlayerControlled is false) yield break;
+            if (!RefillUtility.DoesPawnUseAmmo(selPawn) || !selPawn.IsColonistPlayerControlled)
+                yield break;
 
             var weapon = selPawn.equipment?.Primary;
             var ammoComp = weapon?.TryGetComp<CompAmmo>();

@@ -58,5 +58,19 @@ namespace ProgressionAmmunition
                     return tradeability;
             }
         }
+
+        public static bool DoesPawnUseAmmo(Pawn pawn)
+        {
+            if (!ProgressionAmmunitionMod.Enabled)
+                return false;
+
+            if (pawn?.RaceProps.Humanlike != true)
+                return false;
+
+            if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+                return false;
+
+            return true;
+        }
     }
 }

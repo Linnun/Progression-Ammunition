@@ -1,5 +1,4 @@
 using HarmonyLib;
-using RimWorld;
 using Verse;
 
 namespace ProgressionAmmunition
@@ -9,10 +8,10 @@ namespace ProgressionAmmunition
     {
         public static void Postfix(Verb __instance, ref bool __result)
         {
-            if (__result && ProgressionAmmunitionMod.Enabled && __instance.IsMeleeAttack is false && __instance.CasterPawn is Pawn pawn && pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
+            if (__result && !__instance.IsMeleeAttack && __instance.CasterPawn is Pawn pawn && RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                if (comp != null && comp.CurAmmo <= 0)
+                if (comp != null && comp.IsOutOfAmmo)
                 {
                     __result = false;
                 }

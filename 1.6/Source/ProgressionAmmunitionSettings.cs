@@ -5,6 +5,7 @@ namespace ProgressionAmmunition
     public class ProgressionAmmunitionSettings : ModSettings
     {
         public bool enableMod = true;
+        public bool onlyColonistsUseAmmo = true;
         public bool showOnlyDrafted = true;
         public bool refillBuildingsAreInfinite = true;
         public bool autoRefillWithConsumable = false;
@@ -23,6 +24,7 @@ namespace ProgressionAmmunition
         {
             base.ExposeData();
             Scribe_Values.Look(ref enableMod, "enableMod", true);
+            Scribe_Values.Look(ref onlyColonistsUseAmmo, "onlyColonistsUseAmmo", true);
             Scribe_Values.Look(ref showOnlyDrafted, "showOnlyDrafted", true);
             Scribe_Values.Look(ref refillBuildingsAreInfinite, "refillBuildingsAreInfinite", true);
             Scribe_Values.Look(ref autoRefillWithConsumable, "autoRefillWithConsumable", false);

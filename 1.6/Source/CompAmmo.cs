@@ -60,6 +60,8 @@ namespace ProgressionAmmunition
             set => curAmmo = Mathf.Clamp(value, 0, MaxAmmo);
         }
 
+        public bool IsOutOfAmmo => CurAmmo <= 0;
+
         public override void PostPostMake()
         {
             base.PostPostMake();
@@ -132,18 +134,13 @@ namespace ProgressionAmmunition
 
         public IEnumerable<Gizmo> GetAmmoGizmos()
         {
-            if (ProgressionAmmunitionMod.Enabled is false || parent.def.IsRangedWeapon is false)
-            {
-                yield break;
-            }
-
             var pawn = Holder;
-            if (pawn == null || pawn.IsColonist is false || pawn.Faction != Faction.OfPlayer)
+            if (pawn == null || !parent.def.IsRangedWeapon || !RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 yield break;
             }
 
-            if (ProgressionAmmunitionMod.settings.showOnlyDrafted is false || pawn.Drafted)
+            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.ShowDevGizmos && !pawn.IsPlayerControlled))
             {
                 yield return new Gizmo_Ammo(this);
             }
@@ -171,34 +168,71 @@ namespace ProgressionAmmunition
                     yield return cmd;
                 }
             }
+
+            if (DebugSettings.ShowDevGizmos)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Set ammo to 0",
+                    action = () =>
+                    {
+                        CurAmmo = 0;
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Ammo +1",
+                    action = () =>
+                    {
+                        CurAmmo += 1;
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Set ammo to max",
+                    action = () =>
+                    {
+                        CurAmmo = MaxAmmo;
+                    }
+                };
+            }
         }
 
-        public void TryRefillAmmoFromConsumable()
+        public bool TryRefillAmmoFromConsumable()
         {
             if (Holder is Pawn pawn)
             {
                 var consumable = ConsumableDef;
                 if (consumable == null)
-                    return;
+                    return false;
 
                 var item = pawn.inventory.innerContainer.FirstOrFallback(t => t.def == consumable);
                 if (item == null)
-                    return;
+                    return false;
 
                 pawn.inventory.innerContainer.Take(item, 1).Destroy();
                 RefillAmmo();
                 PlayReloadSound(pawn);
+                return true;
             }
+            return false;
         }
 
         public override string CompInspectStringExtra()
         {
-            if (ProgressionAmmunitionMod.Enabled is false || parent.def.IsRangedWeapon is false) return null;
             var pawn = Holder;
-            if (pawn == null || pawn.IsColonist is false || pawn.Faction != Faction.OfPlayer)
+            if (pawn == null || !parent.def.IsRangedWeapon || !RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 return null;
             }
+
+            if (!DebugSettings.godMode && !pawn.IsPlayerControlled)
+            {
+                return null;
+            }
+
             return "PA_AmmoRemaining".Translate(CurAmmo, MaxAmmo);
         }
     }
