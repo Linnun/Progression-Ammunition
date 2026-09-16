@@ -150,7 +150,7 @@ namespace ProgressionAmmunition
                 yield break;
             }
 
-            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.godMode && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer)))
+            if (!ProgressionAmmunitionMod.settings.showOnlyDrafted || pawn.Drafted || (DebugSettings.ShowDevGizmos && (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer)))
             {
                 yield return new Gizmo_Ammo(this);
             }
@@ -177,6 +177,36 @@ namespace ProgressionAmmunition
                     }
                     yield return cmd;
                 }
+            }
+
+            if (DebugSettings.ShowDevGizmos)
+            {
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Set ammo to 0",
+                    action = () =>
+                    {
+                        CurAmmo = 0;
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Ammo +1",
+                    action = () =>
+                    {
+                        CurAmmo += 1;
+                    }
+                };
+
+                yield return new Command_Action
+                {
+                    defaultLabel = "DEV: Set ammo to max",
+                    action = () =>
+                    {
+                        CurAmmo = MaxAmmo;
+                    }
+                };
             }
         }
 
