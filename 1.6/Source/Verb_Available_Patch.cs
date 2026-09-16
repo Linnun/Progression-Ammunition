@@ -14,7 +14,7 @@ namespace ProgressionAmmunition
                 if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
                     var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                    if (comp != null && comp.CurAmmo <= 0)
+                    if (comp != null && comp.IsOutOfAmmo)
                     {
                         __result = false;
                     }

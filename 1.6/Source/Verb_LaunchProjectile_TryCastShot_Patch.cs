@@ -13,8 +13,8 @@ namespace ProgressionAmmunition
             {
                 if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
-                    var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
-                    if (comp != null && comp.CurAmmo <= 0)
+                    CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                    if (comp != null && comp.IsOutOfAmmo)
                     {
                         return false;
                     }
@@ -29,15 +29,26 @@ namespace ProgressionAmmunition
             {
                 if (!ProgressionAmmunitionMod.settings.onlyColonistsUseAmmo || (pawn.IsColonist && pawn.Faction == Faction.OfPlayer))
                 {
-                    var comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
+                    CompAmmo comp = __instance.EquipmentSource?.TryGetComp<CompAmmo>();
                     if (comp != null)
                     {
                         comp.ConsumeAmmo();
-                        if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable || (!pawn.IsColonist || pawn.Faction != Faction.OfPlayer))
+                        if (comp.IsOutOfAmmo)
                         {
-                            if (comp.CurAmmo <= 0)
+                            if (pawn.IsColonist && pawn.Faction == Faction.OfPlayer)
                             {
-                                comp.TryRefillAmmoFromConsumable();
+                                if (ProgressionAmmunitionMod.settings.autoRefillWithConsumable)
+                                {
+                                    comp.TryRefillAmmoFromConsumable();
+                                }
+                            }
+                            else
+                            {
+                                if (comp.TryRefillAmmoFromConsumable())
+                                    return;
+
+                                OutOfAmmoUtility.TryStowOrDropWeapon(pawn);
+                                OutOfAmmoUtility.TryEquipOtherWeapon(pawn);
                             }
                         }
                     }

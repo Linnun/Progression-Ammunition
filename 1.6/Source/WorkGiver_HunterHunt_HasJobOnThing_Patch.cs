@@ -20,7 +20,7 @@ namespace ProgressionAmmunition
             }
 
             var comp = pawn.equipment?.Primary?.TryGetComp<CompAmmo>();
-            if (comp != null && comp.CurAmmo < 1) __result = false;
+            if (comp != null && comp.IsOutOfAmmo) __result = false;
         }
     }
 }

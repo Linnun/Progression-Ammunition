@@ -60,6 +60,8 @@ namespace ProgressionAmmunition
             set => curAmmo = Mathf.Clamp(value, 0, MaxAmmo);
         }
 
+        public bool IsOutOfAmmo => CurAmmo <= 0;
+
         public override void PostPostMake()
         {
             base.PostPostMake();
@@ -178,22 +180,24 @@ namespace ProgressionAmmunition
             }
         }
 
-        public void TryRefillAmmoFromConsumable()
+        public bool TryRefillAmmoFromConsumable()
         {
             if (Holder is Pawn pawn)
             {
                 var consumable = ConsumableDef;
                 if (consumable == null)
-                    return;
+                    return false;
 
                 var item = pawn.inventory.innerContainer.FirstOrFallback(t => t.def == consumable);
                 if (item == null)
-                    return;
+                    return false;
 
                 pawn.inventory.innerContainer.Take(item, 1).Destroy();
                 RefillAmmo();
                 PlayReloadSound(pawn);
+                return true;
             }
+            return false;
         }
 
         public override string CompInspectStringExtra()
