@@ -55,6 +55,8 @@ namespace ProgressionAmmunition
             }
         }
 
+        public static void Notify_DefsHotReloaded() => cacheBackupWeapons = null;
+
         public static void TryStowOrDropWeapon(Pawn pawn)
         {
             if (pawn?.inventory?.innerContainer == null || pawn?.equipment?.Primary == null)
