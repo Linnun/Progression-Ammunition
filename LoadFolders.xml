@@ -11,7 +11,7 @@
     <li IfModActive="DankPyon.Medieval.Overhaul">Mods and Shit/MO</li>
     <li IfModActive="DankPyon.Medieval.Overhaul.House.Roxmont">Mods and Shit/MO Roxmont</li>
     <li IfModActive="Trickity.Samurai.Faction">Mods and Shit/Ts Samurai Faction</li>
-    <li IfModActive="EdelweissPirate.traumateammissions">Mods and Shit/TraumaTeamMissions</li>
+    <li IfModActive="EdelweissPirate.traumateammissions,EdelweissPirate.traumateamcomplete">Mods and Shit/TraumaTeam</li>
     <li IfModActive="OskarPotocki.VFE.Classical">Mods and Shit/VFE Classical</li>
     <li IfModActive="OskarPotocki.VFE.Medieval2">Mods and Shit/VFE Medieval 2</li>
     <li IfModActive="VanillaExpanded.VFEFactory">Mods and Shit/VFE Factory</li>
