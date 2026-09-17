@@ -30,8 +30,15 @@
     <xpath>Defs/TraderKindDef[defName="Caravan_Outlander_CombatSupplier"]/stockGenerators</xpath>
     <value>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
+        <countRange>1~5</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
         <countRange>1~5</countRange>
+      </li>
+      <li Class="StockGenerator_BuySingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
       </li>
       <li Class="StockGenerator_BuySingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
@@ -43,8 +50,15 @@
     <xpath>Defs/TraderKindDef[defName="Base_Outlander_Standard"]/stockGenerators</xpath>
     <value>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
+        <countRange>2~10</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
         <countRange>2~10</countRange>
+      </li>
+      <li Class="StockGenerator_BuySingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
       </li>
       <li Class="StockGenerator_BuySingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
@@ -56,12 +70,19 @@
     <xpath>Defs/TraderKindDef[defName="Empire_Caravan_TraderGeneral"]/stockGenerators</xpath>
     <value>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
+        <countRange>1~5</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
         <countRange>1~5</countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
         <thingDef>PA_ChargeRefill</thingDef>
         <countRange>1~5</countRange>
+      </li>
+      <li Class="StockGenerator_BuySingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
       </li>
       <li Class="StockGenerator_BuySingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
@@ -76,12 +97,19 @@
     <xpath>Defs/TraderKindDef[defName="Orbital_Empire"]/stockGenerators</xpath>
     <value>
       <li Class="StockGenerator_SingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
+        <countRange>2~10</countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
         <countRange>2~10</countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
         <thingDef>PA_ChargeRefill</thingDef>
         <countRange>2~10</countRange>
+      </li>
+      <li Class="StockGenerator_BuySingleDef">
+        <thingDef>PA_ArrowRefill</thingDef>
       </li>
       <li Class="StockGenerator_BuySingleDef">
         <thingDef>PA_AmmoRefill</thingDef>
