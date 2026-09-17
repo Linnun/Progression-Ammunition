@@ -4,7 +4,7 @@ using Verse;
 
 namespace ProgressionAmmunition
 {
-    [HarmonyPatch(typeof(PawnGenerator), "GenerateGearFor")]
+    [HarmonyPatch(typeof(PawnGenerator), nameof(PawnGenerator.GenerateGearFor))]
     public static class PawnGenerator_GenerateGearFor_Patch
     {
         public static void Postfix(Pawn pawn)
@@ -28,12 +28,15 @@ namespace ProgressionAmmunition
             }
 
             // Backup Weapons
-            ThingDef backupWeaponDef = OutOfAmmoUtility.GetBackupWeaponDefForPawn(pawn);
-            if (backupWeaponDef != null)
+            if (ProgressionAmmunitionMod.settings.canAIPawnsBringBackupWeapons)
             {
-                Thing backupWeapon = ThingMaker.MakeThing(backupWeaponDef, backupWeaponDef.MadeFromStuff ? GenStuff.DefaultStuffFor(backupWeaponDef) : null);
-                if (!pawn.inventory.innerContainer.TryAdd(backupWeapon))
-                    backupWeapon.Destroy();
+                ThingDef backupWeaponDef = OutOfAmmoUtility.GetBackupWeaponDefForPawn(pawn);
+                if (backupWeaponDef != null)
+                {
+                    Thing backupWeapon = ThingMaker.MakeThing(backupWeaponDef, backupWeaponDef.MadeFromStuff ? GenStuff.DefaultStuffFor(backupWeaponDef) : null);
+                    if (!pawn.inventory.innerContainer.TryAdd(backupWeapon))
+                        backupWeapon.Destroy();
+                }
             }
         }
 
