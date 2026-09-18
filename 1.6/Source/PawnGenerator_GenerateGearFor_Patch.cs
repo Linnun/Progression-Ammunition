@@ -9,7 +9,7 @@ namespace ProgressionAmmunition
     {
         public static void Postfix(Pawn pawn)
         {
-            if (pawn?.inventory == null || pawn?.Faction.IsPlayer == true || !RefillUtility.DoesPawnUseAmmo(pawn))
+            if (pawn?.inventory == null || pawn?.Faction?.IsPlayer == true || !RefillUtility.DoesPawnUseAmmo(pawn))
             {
                 return;
             }
