@@ -4,7 +4,7 @@
   <Operation Class="PatchOperationReplace">
     <xpath>Defs/VFEPirates.WarcasketDef[defName="VFEP_WarcasketShoulders_Barrage"]/comps/li[@Class="CompProperties_ApparelReloadable"]/ammoDef</xpath>
     <value>
-        <ammoDef>PA_AmmoRefill</ammoDef>
+      <ammoDef>PA_AmmoRefill</ammoDef>
     </value>
   </Operation>
   <Operation Class="PatchOperationRemove">
@@ -13,7 +13,7 @@
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/VFEPirates.WarcasketDef[defName="VFEP_WarcasketShoulders_Barrage"]/comps/li[@Class="CompProperties_ApparelReloadable"]</xpath>
     <value>
-        <ammoCountToRefill>1</ammoCountToRefill>
+      <ammoCountToRefill>1</ammoCountToRefill>
     </value>
   </Operation>
 </Patch>
