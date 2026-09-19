@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Patch>
-  <!-- Barrage Warcasket Shoulders -->
+  <!-- Grenadier Armor -->
   <Operation Class="PatchOperationReplace">
     <xpath>Defs/ThingDef[defName="Apparel_ArmorMarineGrenadier"]/comps/li[@Class="CompProperties_ApparelReloadable"]/ammoDef</xpath>
     <value>
-        <ammoDef>PA_AmmoRefill</ammoDef>
+      <ammoDef>PA_AmmoRefill</ammoDef>
     </value>
   </Operation>
   <Operation Class="PatchOperationRemove">
@@ -13,7 +13,7 @@
   <Operation Class="PatchOperationAdd">
     <xpath>Defs/ThingDef[defName="Apparel_ArmorMarineGrenadier"]/comps/li[@Class="CompProperties_ApparelReloadable"]</xpath>
     <value>
-        <ammoCountToRefill>1</ammoCountToRefill>
+      <ammoCountToRefill>1</ammoCountToRefill>
     </value>
   </Operation>
 </Patch>
