@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Verse;
+using Verse.AI;
 
 namespace ProgressionAmmunition
 {
@@ -102,6 +103,76 @@ namespace ProgressionAmmunition
                         return true;
                     }
                 }
+            }
+
+            return false;
+        }
+
+        public static bool IsUsableWeaponForPawn(Thing thing, Pawn pawn)
+        {
+            if (thing == null || pawn == null || !thing.def.IsWeapon || thing.IsForbidden(pawn))
+                return false;
+
+            if (thing is ThingWithComps twc)
+            {
+                if (twc.TryGetComp<CompAmmo>(out CompAmmo comp) && comp.IsOutOfAmmo)
+                    return false;
+            }
+            return true;
+        }
+
+        private const float ScavengeSearchRadius = 7f;
+        public static bool TryScavengeWeapon(Pawn pawn)
+        {
+            if (pawn?.Map == null)
+                return false;
+
+            // weapon on ground
+            Thing nearbyWeapon = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, ThingRequest.ForGroup(ThingRequestGroup.Weapon), PathEndMode.Touch, TraverseParms.For(pawn), ScavengeSearchRadius, t => IsUsableWeaponForPawn(t, pawn) && pawn.CanReserve(t) && pawn.CanReach(t, PathEndMode.Touch, Danger.Deadly));
+            if (nearbyWeapon != null)
+            {
+                Job job = JobMaker.MakeJob(JobDefOf.Equip, nearbyWeapon);
+                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                return true;
+            }
+
+            // corpse with weapon
+            Thing nearbyCorpse = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, ThingRequest.ForGroup(ThingRequestGroup.Corpse), PathEndMode.Touch, TraverseParms.For(pawn), ScavengeSearchRadius, t =>
+            {
+                if (t is Corpse corpse && !corpse.IsForbidden(pawn) && pawn.CanReserve(corpse) && pawn.CanReach(corpse, PathEndMode.Touch, Danger.Deadly))
+                {
+                    Pawn innerPawn = corpse.InnerPawn;
+                    if (innerPawn != null)
+                    {
+                        // equipped weapon
+                        if (innerPawn.equipment != null)
+                        {
+                            foreach (ThingWithComps eq in innerPawn.equipment.AllEquipmentListForReading)
+                            {
+                                if (eq != null && IsUsableWeaponForPawn(eq, pawn))
+                                    return true;
+                            }
+                        }
+
+                        // inventory
+                        if (innerPawn.inventory?.innerContainer != null)
+                        {
+                            foreach (Thing invItem in innerPawn.inventory.innerContainer)
+                            {
+                                if (invItem != null && IsUsableWeaponForPawn(invItem, pawn))
+                                    return true;
+                            }
+                        }
+                    }
+                }
+                return false;
+            });
+
+            if (nearbyCorpse is Corpse foundCorpse)
+            {
+                Job job = JobMaker.MakeJob(DefsOf.PA_EquipFromCorpse, nearbyCorpse);
+                pawn.jobs.TryTakeOrderedJob(job, JobTag.Misc);
+                return true;
             }
 
             return false;
