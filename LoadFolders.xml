@@ -10,6 +10,7 @@
     <li IfModActive="Matsay.ForsakenFaction">Mods and Shit/ForsakenFaction</li>
     <li IfModActive="DankPyon.Medieval.Overhaul">Mods and Shit/MO</li>
     <li IfModActive="DankPyon.Medieval.Overhaul.House.Roxmont">Mods and Shit/MO Roxmont</li>
+    <li IfModActive="Reel.TurretPipeline">Mods and Shit/ReelTurretPipeline</li>
     <li IfModActive="Trickity.Samurai.Faction">Mods and Shit/Ts Samurai Faction</li>
     <li IfModActive="EdelweissPirate.traumateammissions,EdelweissPirate.traumateamcomplete">Mods and Shit/TraumaTeam</li>
     <li IfModActive="OskarPotocki.VFE.Classical">Mods and Shit/VFE Classical</li>
